@@ -1,13 +1,176 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="bn">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নব জাগরণ সমিতি - ডিজিটাল লেজার</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', 'Hind Siliguri', sans-serif; }
+        .bn { font-family: 'Hind Siliguri', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
 
+    <script>
+https://script.google.com/macros/s/AKfycbyUW0Zh44rk_xzrauRp06c-7v3OLVOjEcg4nCAZsyyH9N5lLV5OLtMDEK2b4ESkao1z/exec
+        const SCRIPT_URL = "আপনার_লিঙ্ক_এখানে_পেস্ট_করুন";
+    </script>
+
+    <header class="bg-blue-700 text-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-bold bn">নব জাগরণ সমিতি</h1>
+            <div id="auth-box">
+                <button onclick="openLogin()" class="bg-white/20 px-4 py-2 rounded-lg text-sm bn">এডমিন লগইন</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6">
+        
+        <aside class="space-y-6">
+            <div id="stats" class="grid grid-cols-1 gap-4">
+                </div>
+            
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                <h3 class="font-bold mb-4 bn border-b pb-2">সদস্য তালিকা</h3>
+                <div id="member-list" class="space-y-3 max-h-[400px] overflow-y-auto">
+                    </div>
+            </div>
+
+            <div id="admin-panel" class="hidden bg-white p-5 rounded-2xl shadow-md border-2 border-blue-100">
+                <h3 class="font-bold mb-4 bn text-blue-700">নতুন এন্ট্রি</h3>
+                <div class="space-y-4">
+                    <select id="f-member" class="w-full p-2 border rounded bn text-sm"></select>
+                    <select id="f-type" class="w-full p-2 border rounded bn text-sm">
+                        <option value="মাসিক কিস্তি">মাসিক কিস্তি</option>
+                        <option value="এককালীন জমা">এককালীন জমা</option>
+                        <option value="নাস্তার জন্য জমা">নাস্তার জন্য জমা</option>
+                    </select>
+                    <input type="number" id="f-amount" placeholder="টাকার পরিমাণ" class="w-full p-2 border rounded text-sm">
+                    <button onclick="submitData()" id="sub-btn" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold bn">জমা দিন</button>
+                </div>
+            </div>
+        </aside>
+
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="p-4 border-b bg-slate-50 flex justify-between items-center">
+                <h3 class="font-bold bn">লেনদেন ইতিহাস</h3>
+                <button onclick="window.print()" class="text-sm bg-white border px-3 py-1 rounded bn">প্রিন্ট</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-100">
+                        <tr>
+                            <th class="p-4 bn">সদস্য</th>
+                            <th class="p-4 bn">ধরণ</th>
+                            <th class="p-4 bn">পরিমাণ</th>
+                            <th class="p-4 bn">তারিখ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ledger-rows">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <div id="login-modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-[100]">
+        <div class="bg-white p-6 rounded-2xl shadow-xl w-80">
+            <h2 class="text-center font-bold mb-4 bn">এডমিন এক্সেস</h2>
+            <input type="password" id="pass" class="w-full p-2 border rounded mb-4 text-center" placeholder="****">
+            <div class="flex gap-2">
+                <button onclick="closeLogin()" class="flex-1 bn py-2">বাতিল</button>
+                <button onclick="checkLogin()" class="flex-1 bg-blue-600 text-white rounded-lg bn">লগইন</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MEMBERS = ['মো: মোজাফফর', 'মো: রাশিদুল ইসলাম', 'মো: মঞ্জুরুল হক', 'মো: আবু রায়হান', 'মো: মাহমুদ হাসান', 'মো: রমজান', 'মোঃ বাইজিদ', 'মোঃ রিদওয়ান', 'মোঃ জাহিদ', 'মোঃ মাহমুদুল হাসান', 'মোঃ নাহিদ'];
+        let state = { entries: [], isAdmin: false };
+
+        async function loadData() {
+            if(!SCRIPT_URL || SCRIPT_URL.includes("আপনার")) return;
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const data = await res.json();
+                state.entries = data.entries || [];
+                render();
+            } catch(e) { console.error(e); }
+        }
+
+        function render() {
+            const rows = document.getElementById('ledger-rows');
+            rows.innerHTML = state.entries.map(e => `
+                <tr class="border-b">
+                    <td class="p-4 bn font-medium">${e.member}</td>
+                    <td class="p-4"><span class="px-2 py-0.5 rounded-full text-[10px] bg-blue-100 text-blue-700 font-bold bn">${e.paymentType}</span></td>
+                    <td class="p-4 font-bold">৳${Number(e.amount).toLocaleString()}</td>
+                    <td class="p-4 text-slate-500 text-xs">${new Date(e.date).toLocaleDateString('bn-BD')}</td>
+                </tr>
+            `).join('');
+
+            const memberDiv = document.getElementById('member-list');
+            memberDiv.innerHTML = MEMBERS.map(m => {
+                const total = state.entries.filter(e => e.member === m).reduce((s, e) => s + Number(e.amount), 0);
+                return `<div class="flex justify-between items-center border-b pb-1 text-sm"><span class="bn">${m}</span><span class="font-bold">৳${total}</span></div>`;
+            }).join('');
+
+            const stats = document.getElementById('stats');
+            const totalSavings = state.entries.reduce((s,e) => s + Number(e.amount), 0);
+            stats.innerHTML = `
+                <div class="bg-blue-600 text-white p-5 rounded-2xl shadow-lg">
+                    <div class="text-xs opacity-80 bn">মোট জমা তহবিল</div>
+                    <div class="text-3xl font-black">৳${totalSavings.toLocaleString()}</div>
+                </div>
+            `;
+        }
+
+        async function submitData() {
+            const btn = document.getElementById('sub-btn');
+            const entry = {
+                member: document.getElementById('f-member').value,
+                paymentType: document.getElementById('f-type').value,
+                amount: document.getElementById('f-amount').value,
+                month: 'চলতি',
+                date: new Date().toISOString()
+            };
+            if(!entry.amount) return alert("পরিমাণ লিখুন");
+            
+            btn.innerText = "প্রসেসিং...";
+            btn.disabled = true;
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'add', entry })
+                });
+                document.getElementById('f-amount').value = '';
+                await loadData();
+            } catch(e) { alert("Error!"); }
+            btn.innerText = "জমা দিন";
+            btn.disabled = false;
+        }
+
+        function checkLogin() {
+            if(document.getElementById('pass').value === '1212') {
+                state.isAdmin = true;
+                document.getElementById('admin-panel').classList.remove('hidden');
+                document.getElementById('auth-box').innerHTML = `<button onclick="location.reload()" class="bn text-sm">লগআউট</button>`;
+                closeLogin();
+            } else { alert("ভুল পাসওয়ার্ড"); }
+        }
+
+        function openLogin() { document.getElementById('login-modal').classList.remove('hidden'); }
+        function closeLogin() { document.getElementById('login-modal').classList.add('hidden'); }
+
+        // Initial setup
+        document.getElementById('f-member').innerHTML = MEMBERS.map(m => `<option value="${m}">${m}</option>`).join('');
+        lucide.createIcons();
+        loadData();
+    </script>
+</body>
+</html>
