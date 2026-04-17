@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Hind Siliguri", ui-sans-serif, system-ui, sans-serif;
+  
+  --color-primary: #1e40af;
+  --color-secondary: #64748b;
+  --color-accent: #3b82f6;
+  --color-bg: #f8fafc;
+  --color-card: #ffffff;
+  --color-border: #e2e8f0;
+  --color-text: #1e293b;
+  --color-primary-light: #eff6ff;
+}
+
+/* Global font application: Inter for numbers/latin, Hind Siliguri for Bengali */
+body {
+  font-family: "Inter", "Hind Siliguri", sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure form elements inherit the correct font stack */
+input, select, textarea, button {
+  font-family: inherit;
+}
+
+/* Bengali specific adjustments */
+.bn {
+  font-family: "Hind Siliguri", "Inter", sans-serif;
+  line-height: 1.6;
+}
+
+/* Clean numeric display */
+.num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
